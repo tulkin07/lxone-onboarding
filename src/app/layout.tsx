@@ -1,33 +1,27 @@
 import { GeistSans } from "geist/font/sans"
-import type { Metadata } from "next"
-import { ThemeProvider } from "next-themes"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import React from "react"
 import "./globals.css"
-import { siteConfig } from "./siteConfig"
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://yoururl.com"),
-  title: siteConfig.name,
-  description: siteConfig.description,
-  keywords: [],
-  authors: [
-    {
-      name: "yourname",
-      url: "",
-    },
-  ],
-  creator: "yourname",
-  // openGraph: {
-  //   type: "website",
-  //   locale: "en_US",
-  //   url: siteConfig.url,
-  //   title: siteConfig.name,
-  //   description: siteConfig.description,
-  //   siteName: siteConfig.name,
-  // },
-  icons: {
-    icon: "/favicon.ico",
+export const metadata = {
+  title: "Lx1",
+  description: "Lx1 - Transporation Management System",
+  authors: [{ name: "Lx1 - Manage Logistics With Ease" }],
+  openGraph: {
+    title: "Lx1",
+    description: "Lx1 - Transporation Management System",
+    url: "https://lxone-onboarding.vercel.app/onboarding/step-one",
+    siteName: "lxone-onboarding",
+    images: [
+      {
+        url: "https://lxone.vercel.app/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Lx1 Dashboard Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
   },
 }
 

@@ -1,17 +1,13 @@
 export const siteConfig = {
-  name: "Insights",
-  url: "https://insights.tremor.so",
-  description: "The only reporting and audit dashboard you will ever need.",
+  name: "Lx1",
+  url: "https://lxone.vercel.app",
+  description: "Lx1 - Transporation Management System",
   // baseLinks: {
-  //   reports: "/reports",
-  //   transactions: "/transactions",
-  //   settings: {
-  //     audit: "/settings/audit",
-  //     users: "/settings/users",
-  //     billing: "/settings/billing",
+  //   quotes: {
+  //     overview: "/dashboard",
+  //     monitoring: "/",
+  //     audits: "/",
   //   },
-  //   login: "/login",
-  //   onboarding: "/onboarding/products",
   // },
 }
 

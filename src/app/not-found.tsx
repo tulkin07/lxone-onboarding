@@ -34,7 +34,7 @@ export default function NotFound() {
         Sorry, we could not find the page you are looking for.
       </p>
       <Button asChild className="group mt-8" variant="light">
-        <Link href={""}>Go to the home page</Link>
+        <Link href={"/onboarding/step-one"}>Go to the home page</Link>
       </Button>
     </div>
   )
