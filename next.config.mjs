@@ -1,9 +1,28 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-  typescript: {
+   typescript: {
     ignoreBuildErrors: true, // ✅ build to‘xtamaydi
+  },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "/",
+        permanent: true,
+      },
+    ]
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
 }
 
-module.exports = nextConfig
+export default nextConfig
