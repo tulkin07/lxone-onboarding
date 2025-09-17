@@ -18,14 +18,14 @@ export const metadata: Metadata = {
     },
   ],
   creator: "yourname",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
+  // openGraph: {
+  //   type: "website",
+  //   locale: "en_US",
+  //   url: siteConfig.url,
+  //   title: siteConfig.name,
+  //   description: siteConfig.description,
+  //   siteName: siteConfig.name,
+  // },
   icons: {
     icon: "/favicon.ico",
   },
@@ -41,15 +41,15 @@ export default function RootLayout({
       <body
         className={`${GeistSans.className} overflow-x-hidden overflow-y-scroll scroll-auto bg-gray-50 antialiased selection:bg-blue-100 selection:text-blue-700 `}
       >
-        <ThemeProvider
+        {/* <ThemeProvider
           defaultTheme="system"
           disableTransitionOnChange
           attribute="class"
-        >
+        > */}
           <NuqsAdapter>
             <div>{children}</div>
           </NuqsAdapter>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   )
