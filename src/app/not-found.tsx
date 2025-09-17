@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <Link
-        href={siteConfig.baseLinks.reports}
+        href={""}
         aria-label="Go to Insights home page"
       >
         <div className="relative flex items-center justify-center rounded-lg bg-white p-3 shadow-lg ring-1 ring-black/5">
@@ -35,7 +35,7 @@ export default function NotFound() {
         Sorry, we could not find the page you are looking for.
       </p>
       <Button asChild className="group mt-8" variant="light">
-        <Link href={siteConfig.baseLinks.reports}>Go to the home page</Link>
+        <Link href={""}>Go to the home page</Link>
       </Button>
     </div>
   )
