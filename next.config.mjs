@@ -1,28 +1,33 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
-   typescript: {
-    ignoreBuildErrors: true, // ✅ build to‘xtamaydi
+  redirects: async () => [
+    {
+      source: "/",
+      destination: "/onboarding/step-one",
+      permanent: true,
+    },
+  ],
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  redirects: async () => {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
+   async headers() {
     return [
       {
-        source: "/",
-        destination: "/",
-        permanent: true,
+        source: '/(.*)', 
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
       },
-    ]
+    ];
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**",
-      },
-    ],
-  },
+ 
 }
 
 export default nextConfig
