@@ -8,8 +8,6 @@ import { Mail, Phone } from "lucide-react"
 import { usePathname } from "next/navigation"
 import React from "react"
 
-
-
 interface Step {
   name: string
   href: string
@@ -60,7 +58,7 @@ const StepProgress = ({ steps }: StepProgressProps) => {
   )
 }
 
-const OnboardingLayoutClient = ({
+const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -107,4 +105,4 @@ const OnboardingLayoutClient = ({
   )
 }
 
-export default OnboardingLayoutClient
+export default Layout
