@@ -1,5 +1,4 @@
 "use client"
-import "../../../app/globals.css"
 import { Logo } from "@/components/ui/Logo"
 import Footer from "@/features/registration/components/Footer"
 import useScroll from "@/lib/useScroll"
@@ -17,10 +16,10 @@ interface Step {
 }
 
 const steps: Step[] = [
-  { name: "Product selection", href: "/onboarding/step-one" },
-  { name: "Employees", href: "/onboarding/step-two" },
-  { name: "Infrastructure", href: "/onboarding/step-three" },
-  { name: "Infrastructuredwd", href: "/onboarding/step-finish" },
+  { name: "Product selection", href: "/step-one" },
+  { name: "Employees", href: "/step-two" },
+  { name: "Infrastructure", href: "/step-three" },
+  { name: "Infrastructuredwd", href: "/step-finish" },
 ]
 
 interface StepProgressProps {

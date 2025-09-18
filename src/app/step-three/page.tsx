@@ -1,26 +1,15 @@
 "use client"
 import { Button } from "@/components/Button"
-import { Input } from "@/components/Input"
 import { Label } from "@/components/Label"
-import MaskedInput from "@/components/MaskedInput"
-import {
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/Select"
-import { LIMITED_LIABILITY } from "@/constants/constants"
 import { useBusinessType } from "@/features/hrportal/hr/hooks/useBusinessType"
 import { useStates } from "@/features/hrportal/hr/hooks/useState"
 
-import { Select } from "@radix-ui/react-select"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
-import dynamic from "next/dynamic"
 
 const RegistrationDocuments = dynamic(
-  () =>
-    import("../../../features/registration//components/RegistrationDocuments"),
+  () => import("../../features/registration/components/RegistrationDocuments"),
   {
     ssr: false,
   },

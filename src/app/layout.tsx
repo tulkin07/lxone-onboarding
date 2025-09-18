@@ -2,6 +2,7 @@ import { GeistSans } from "geist/font/sans"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import React from "react"
 import "./globals.css"
+import OnboardingLayoutClient from "@/features/registration/components/OnboardingLayoutClient"
 
 export const metadata = {
   title: "Lx1",
@@ -33,7 +34,9 @@ export default function RootLayout({
           attribute="class"
         > */}
           <NuqsAdapter>
-            <div>{children}</div>
+            <OnboardingLayoutClient>
+              {children}
+            </OnboardingLayoutClient>
           </NuqsAdapter>
         {/* </ThemeProvider> */}
       </body>
