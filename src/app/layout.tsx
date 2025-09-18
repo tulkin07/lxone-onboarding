@@ -11,15 +11,15 @@ export const metadata = {
   openGraph: {
     title: "Lx1",
     description: "Lx1 - Transporation Management System",
-    url: "https://lxone-onboarding.vercel.app/onboarding",
+    url: "https://lxone-onboarding.vercel.app",
     siteName: "lxone-onboarding",
     locale: "en_US",
     type: "website",
      images: [
       {
         url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        width: 100,
+        height: 200,
         alt: "Lx1 - Manage Logistics With Ease",
       },
     ],
