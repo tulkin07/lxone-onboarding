@@ -12,14 +12,6 @@ export const metadata = {
     description: "Lx1 - Transporation Management System",
     url: "https://lxone-onboarding.vercel.app/onboarding/step-one",
     siteName: "lxone-onboarding",
-    // images: [
-    //   {
-    //     url: "https://lxone.vercel.app/og-image.png",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "Lx1 Dashboard Preview",
-    //   },
-    // ],
     locale: "en_US",
     type: "website",
   },
