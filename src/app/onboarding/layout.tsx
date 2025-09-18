@@ -1,5 +1,5 @@
 // app/onboarding/layout.tsx  (SERVER component, "use client" YO'Q!)
-import "../../app/globals.css"
+
 import React from "react"
 import OnboardingLayoutClient from "@/features/registration/components/OnboardingLayoutClient"
 

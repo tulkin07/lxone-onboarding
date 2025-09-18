@@ -1,4 +1,5 @@
 "use client"
+import "../../../app/globals.css"
 import { Logo } from "@/components/ui/Logo"
 import Footer from "@/features/registration/components/Footer"
 import useScroll from "@/lib/useScroll"
