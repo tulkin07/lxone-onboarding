@@ -1,4 +1,5 @@
 // app/onboarding/layout.tsx  (SERVER component, "use client" YO'Q!)
+import "../../app/globals.css"
 import React from "react"
 import OnboardingLayoutClient from "@/features/registration/components/OnboardingLayoutClient"
 
@@ -22,5 +23,7 @@ export const metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <OnboardingLayoutClient>{children}</OnboardingLayoutClient>
+  return <OnboardingLayoutClient>
+    {children}
+    </OnboardingLayoutClient>
 }
