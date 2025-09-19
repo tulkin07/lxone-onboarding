@@ -3,6 +3,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app"
 import React from "react"
 import "./globals.css"
 import OnboardingLayoutClient from "@/features/registration/components/OnboardingLayoutClient"
+import { RegistrationProvider } from "@/context/RegisterationContext"
 
 export const metadata = {
   title: "Lx1",
@@ -18,8 +19,8 @@ export const metadata = {
      images: [
       {
         url: "/og-image.png",
-        width: 100,
-        height: 200,
+        width: 48,
+        height: 48,
         alt: "Lx1 - Manage Logistics With Ease",
       },
     ],
@@ -43,7 +44,9 @@ export default function RootLayout({
         > */}
           <NuqsAdapter>
             <OnboardingLayoutClient>
-              {children}
+              <RegistrationProvider>
+                {children}
+              </RegistrationProvider>
             </OnboardingLayoutClient>
           </NuqsAdapter>
         {/* </ThemeProvider> */}

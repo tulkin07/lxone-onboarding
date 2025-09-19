@@ -11,9 +11,11 @@ import {
   SelectValue,
 } from "@/components/Select"
 import { LIMITED_LIABILITY } from "@/constants/constants"
+import { useRegistration } from "@/context/RegisterationContext"
 import { useBusinessType } from "@/features/hrportal/hr/hooks/useBusinessType"
 import { useStates } from "@/features/hrportal/hr/hooks/useState"
 import { ModalRegistration } from "@/features/registration/components/ModalRegistration"
+import ZipCodeSelect from "@/features/registration/components/ZipCodeSelect"
 import { Select } from "@radix-ui/react-select"
 import { InfoIcon } from "lucide-react"
 import Link from "next/link"
@@ -35,12 +37,10 @@ export default function Products() {
   const [loading, setLoading] = React.useState(false)
   const router = useRouter()
   const { states, isLoadingState } = useStates()
-  const [step, setStep] = useState(1)
   const [taxExempt, setTaxExempt] = useState(false)
   const { businessTypes } = useBusinessType()
-  const [businessType, setBusinessType] = useState("")
-
   const isAnyItemChecked = Object.values(checkedItems).some(Boolean)
+  const { data, updateData } = useRegistration()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -61,7 +61,7 @@ export default function Products() {
               <span>Registration conditions, </span>
               <ModalRegistration>
                 <span className="mt-4 w-full cursor-pointer gap-2 text-blue-500 sm:mt-0 sm:w-fit">
-                   click here!
+                  click here!
                 </span>
               </ModalRegistration>
             </span>
@@ -80,9 +80,13 @@ export default function Products() {
                 Company name
               </Label>
               <Input
+                value={data.company_name}
                 required
                 type="text"
                 placeholder="Company name"
+                onChange={(e) => {
+                  updateData({ ...data, company_name: e.target.value })
+                }}
                 // className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -96,9 +100,13 @@ export default function Products() {
                 Phone number
               </Label>
               <MaskedInput
+                value={data.company_phone}
                 mask="+1 (000) 000-0000"
                 placeholder="+1 (123) 456-7890"
                 required
+                onChange={(value) =>
+                  updateData({ ...data, company_phone: value })
+                }
               />
             </div>
 
@@ -110,7 +118,15 @@ export default function Products() {
               >
                 Doing business as:
               </Label>
-              <Input required type="text" placeholder="4564" />
+              <Input
+                // value={data.other_business_type}
+                // onChange={(e) =>
+                //   updateData({ other_business_type: e.target.value })
+                // }
+                required
+                type="text"
+                placeholder="4564"
+              />
             </div>
 
             {/* Employer ID */}
@@ -119,6 +135,8 @@ export default function Products() {
                 Employer ID number
               </Label>
               <MaskedInput
+                value={data.employee_id}
+                onChange={(e) => updateData({ ...data, employee_id: e })}
                 mask="00-0000000"
                 placeholder="xx-xxxxxxx"
                 required
@@ -135,12 +153,10 @@ export default function Products() {
               </Label>
               <Select
                 required
-                // value={
-                //   formData.business_type
-                //     ? formData.business_type.toString()
-                //     : ""
-                // }
-                onValueChange={(value) => setBusinessType(value)}
+                value={data.business_type.toString()}
+                onValueChange={(e: string) =>
+                  updateData({ ...data, business_type: e as unknown as number })
+                }
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Business Type" />
@@ -166,7 +182,38 @@ export default function Products() {
                 >
                   ZIP code
                 </Label>
-                <Input type="number" placeholder="ZIP code" required />
+                <ZipCodeSelect/>
+                {/* <Select required value={""}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select ZIP code " />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60 overflow-y-auto">
+                    {isPending ? (
+                      <div className="p-2 text-center text-gray-500">
+                        Loading...
+                      </div>
+                    ) : zipCodeList?.detail?.length === 0 ? (
+                      <SelectItem value="no-data" disabled>
+                        No data
+                      </SelectItem>
+                    ) : (
+                      zipCodeList?.detail?.map(
+                        (option: {
+                          zip: string
+                          city: string
+                          state: string | null
+                        }) => (
+                          <SelectItem key={option.zip} value={option.zip}>
+                            {option.zip} – {option.city}{" "}
+                            {option.state ? `(${option.state})` : ""}
+                          </SelectItem>
+                        ),
+                      )
+                    )}
+                  </SelectContent>
+                </Select> */}
+
+                {/* <Input type="number" placeholder="ZIP code" required /> */}
               </div>
 
               {/* State */}
@@ -205,7 +252,7 @@ export default function Products() {
             </div>
           </div>
           <div className="mt-5 grid grid-cols-2 sm:grid-cols-1">
-            {businessType == "6" && (
+            {data.business_type == 6 && (
               <div className="mb-4">
                 <Label
                   className="mb-1 block text-sm font-medium text-gray-700"
@@ -242,7 +289,7 @@ export default function Products() {
                 </Select>
               </div>
             )}
-            {businessType == "7" && (
+            {data.business_type == 7 && (
               <div className="mb-4">
                 <Label
                   className="mb-1 block text-sm font-medium text-gray-700"
