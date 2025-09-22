@@ -3,9 +3,9 @@ import React from "react"
 export default function Privacy() {
   return (
     <main id="main-content" className="mx-auto mb-10 mt-10 max-w-5xl">
-      <div className="min-h-screen bg-gray-50 px-6">
-        <div className="mx-auto max-w-4xl space-y-6 rounded-xl bg-white p-8 shadow-sm md:p-12">
-          <h1 className="text-3xl font-bold text-gray-900">
+      <div className="min-h-screen bg-gray-50 px-3">
+        <div className="space-y-6 rounded-xl bg-white shadow-sm md:p-12 px-3 py-5">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
             Lxone - Privacy Policy
           </h1>
           <p className="text-sm text-gray-500 ">
