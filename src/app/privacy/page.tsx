@@ -3,16 +3,16 @@ import React from "react"
 export default function Privacy() {
   return (
     <main id="main-content" className="mx-auto mb-10 mt-10 max-w-5xl">
-      <div className="min-h-screen bg-gray-50 px-3">
-        <div className="space-y-6 rounded-xl bg-white shadow-sm md:p-12 px-3 py-5">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+      <div className="min-h-screen px-3">
+        <div className="space-y-6 rounded-xl bg-white px-4 py-5  md:p-12 ">
+          <h1 className="text-xl font-bold text-gray-900  md:text-3xl">
             Lxone - Privacy Policy
           </h1>
-          <p className="text-sm text-gray-500 ">
+          <p className="text-sm text-gray-500">
             Last Updated: December 24, 2024
           </p>
 
-          <p className="text-gray-700 text-sm">
+          <p className="text-sm text-gray-700">
             This Privacy Policy describes how <strong>Lxone</strong> ("we,"
             "our," or "us") collects, uses, and shares your personal information
             when you use our mobile application ("App").
@@ -64,7 +64,7 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Information Automatically Collected
             </h2>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>Device information (device type, operating system)</li>
               <li>Log data and usage statistics</li>
               <li>Location information (with your permission)</li>
@@ -74,10 +74,10 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Information We Collect for Web App (Dispatch App)
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               For our Dispatch Web App, we collect the following information:
             </p>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>User information (account details, contact information)</li>
               <li>
                 Driver information (profiles, contact details, certification
@@ -104,11 +104,11 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Google Services Integration and Data Access (Dispatch App)
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               By using our Google OAuth integration, you authorize Lxone to
               access your Google account for the following purposes:
             </p>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>Reading and processing emails from your Gmail account</li>
               <li>Sending emails on your behalf through your Gmail account</li>
               <li>Marking emails as read in your Gmail account</li>
@@ -117,8 +117,8 @@ export default function Privacy() {
 
           {/* Security */}
           <section>
-            <p className="mb-2 text-gray-700 text-sm">Data Access and Usage:</p>
-            <p className="text-gray-700 text-sm">
+            <p className="mb-2 text-sm text-gray-700">Data Access and Usage:</p>
+            <p className="text-sm text-gray-700">
               We will only access and process emails that are relevant to the
               parsing of cargo information from brokers, sending email
               communications to brokers, as well as parsing broker responses and
@@ -130,8 +130,10 @@ export default function Privacy() {
 
           {/* How We Use */}
           <section>
-            <p className="mb-2 text-gray-700 text-sm">Authorization Management:</p>
-            <p className="text-gray-700 text-sm">
+            <p className="mb-2 text-sm text-gray-700">
+              Authorization Management:
+            </p>
+            <p className="text-sm text-gray-700">
               You can revoke Lxone's access to your Google account at any time
               through your Google Account settings. Please note that revoking
               access may limit certain features of our service that rely on
@@ -139,8 +141,8 @@ export default function Privacy() {
             </p>
           </section>
           <section>
-            <p className="mb-2 text-gray-700 text-sm">Security Measures:</p>
-            <p className="text-gray-700 text-sm">
+            <p className="mb-2 text-sm text-gray-700">Security Measures:</p>
+            <p className="text-sm text-gray-700">
               We implement strict security measures to protect your Google
               account data and will never share your access credentials with
               third parties. All data access is encrypted and follows Google's
@@ -148,8 +150,8 @@ export default function Privacy() {
             </p>
           </section>
           <section>
-            <p className="mb-2 text-gray-700 text-sm">Scope of Access:</p>
-            <p className="text-gray-700 text-sm">
+            <p className="mb-2 text-sm text-gray-700">Scope of Access:</p>
+            <p className="text-sm text-gray-700">
               Our access is limited to email-related functions necessary for
               service delivery. We do not access or store any other Google
               services or data from your account.
@@ -160,10 +162,10 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               How We Use Your Information
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               We use the collected information to:
             </p>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>Provide and maintain our services</li>
               <li>Improve and personalize your experience</li>
               <li>Communicate with you about updates and services</li>
@@ -176,7 +178,7 @@ export default function Privacy() {
               Data Sharing and Disclosure
             </h2>
             <p className="text-gray-700">We may share your information with:</p>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>Service providers who assist in our operations</li>
               <li>Legal authorities when required by law</li>
               <li>Business partners with your consent</li>
@@ -187,7 +189,7 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Data Security
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               We implement appropriate technical and organizational measures to
               protect your personal information against unauthorized access,
               alteration, disclosure, or destruction.
@@ -198,8 +200,8 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Your Rights
             </h2>
-            <p className="text-gray-700 text-sm">You have the right to:</p>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">You have the right to:</p>
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>Access your personal information</li>
               <li>Correct inaccurate data</li>
               <li>Request deletion of your data</li>
@@ -210,7 +212,7 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Children's Privacy
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               Our App is not intended for children under 13 years of age. We do
               not knowingly collect personal information from children under 13.
             </p>
@@ -219,7 +221,7 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Changes to This Policy
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               We may update this Privacy Policy from time to time. We will
               notify you of any changes by posting the new Privacy Policy on
               this page and updating the "Last Updated" date.
@@ -229,17 +231,17 @@ export default function Privacy() {
             <h2 className="mb-2 text-base font-semibold text-gray-900">
               Contact Us
             </h2>
-            <p className="text-gray-700 text-sm">
+            <p className="text-sm text-gray-700">
               If you have any questions about this Privacy Policy, please
               contact us at:
             </p>
-            <ul className="list-inside list-disc space-y-1 text-gray-700 text-sm">
+            <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
               <li>Email: info@altek.uz</li>
               <li>Phone: +998 (33) 330-4774</li>
               <li>Address: Tashkent city, Zarkent 1st passage, 20/1</li>
               <li>Opt-out of marketing communications</li>
             </ul>
-            <p className="text-gray-700 mt-2 text-sm">
+            <p className="mt-2 text-sm text-gray-700">
               By using the Lxone App, you agree to the collection and use of
               information in accordance with this Privacy Policy.
             </p>
