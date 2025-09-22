@@ -43,11 +43,7 @@ export default function RootLayout({
           attribute="class"
         > */}
           <NuqsAdapter>
-            <OnboardingLayoutClient>
-              <RegistrationProvider>
                 {children}
-              </RegistrationProvider>
-            </OnboardingLayoutClient>
           </NuqsAdapter>
         {/* </ThemeProvider> */}
       </body>

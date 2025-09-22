@@ -182,7 +182,19 @@ export default function Products() {
                 >
                   ZIP code
                 </Label>
-                <ZipCodeSelect/>
+                <ZipCodeSelect
+                  // value="45612"
+                  onSelect={(item) => {
+                    console.log("Tanlangan joy:", item)
+                    updateData({
+                      ...data,
+                      state: item.state,
+                      zip_code: item.zip,
+                      city: item.city,
+                    })
+                    // { zip: "10001", city: "New York", state: "NY" }
+                  }}
+                />
                 {/* <Select required value={""}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select ZIP code " />
@@ -224,7 +236,23 @@ export default function Products() {
                 >
                   State
                 </Label>
-                <Select required>
+                {/* <Input
+                  value={data.state}
+                  onChange={(e) => updateData({ state: e.target.value })}
+                  required
+                  type="text"
+                  placeholder="4564"
+                /> */}
+                <Select
+                  required
+                  value={data.state}
+                  onValueChange={(e: string) =>
+                    updateData({
+                      ...data,
+                      state: e,
+                    })
+                  }
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select State" />
                   </SelectTrigger>
@@ -241,7 +269,7 @@ export default function Products() {
                           name: string
                         }) => (
                           <SelectItem key={option.id} value={option.name}>
-                            {option.short_name}
+                            {option.name}
                           </SelectItem>
                         ),
                       )
@@ -310,7 +338,13 @@ export default function Products() {
               >
                 City
               </Label>
-              <Input required type="text" placeholder="City" />
+              <Input
+                value={data.city}
+                onChange={(e) => updateData({ ...data, city: e.target.value })}
+                required
+                type="text"
+                placeholder="City"
+              />
             </div>
 
             {/* Address */}
@@ -425,11 +459,11 @@ export default function Products() {
             <Checkbox className="h-4 w-4 rounded border-gray-300" required />
             <span className="text-sm dark:text-gray-400">
               I have read and agree to the{" "}
-              <Link href={""} className="text-blue-500">
+              <Link href={"/privacy"} className="text-blue-500">
                 Privacy Policy
               </Link>{" "}
               and{" "}
-              <Link href={""} className="text-blue-500">
+              <Link href={"/terms"} className="text-blue-500">
                 Terms & Conditions.
               </Link>{" "}
               Also consent to the collection, use, and processing of my personal

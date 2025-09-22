@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
 const RegistrationDocuments = dynamic(
-  () => import("../../features/registration/components/RegistrationDocuments"),
+  () => import("../../../features/registration/components/RegistrationDocuments"),
   {
     ssr: false,
   },
