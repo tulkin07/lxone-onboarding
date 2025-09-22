@@ -47,7 +47,7 @@ export default function Terms() {
             <ul className="ml-4 mt-2 list-disc space-y-3 text-sm text-gray-700">
               <li>
                 Application means the software program provided by the Company
-                downloaded by You on any electronic device, named ATREK
+                downloaded by You on any electronic device, named Lxone
               </li>
               <li>
                 Application Store means the digital distribution service
