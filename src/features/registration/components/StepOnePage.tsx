@@ -19,7 +19,7 @@ import { useStates } from "@/features/registration/hooks/useState"
 import { Select } from "@radix-ui/react-select"
 import { InfoIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 import DatePicker from "react-datepicker"
 import dayjs from "dayjs"
@@ -28,8 +28,8 @@ interface CheckedItems {
   [categoryId: string]: boolean
 }
 
-export default function StepOnePage() {
-  const [checkedItems, setCheckedItems] = React.useState<CheckedItems>({})
+export default function StepOnePage({token}:{token:string}) {
+  const [checkedItems] = React.useState<CheckedItems>({})
   const [loading, setLoading] = React.useState(false)
   const router = useRouter()
   const { states, isLoadingState } = useStates()
@@ -37,13 +37,12 @@ export default function StepOnePage() {
   const { businessTypes } = useBusinessType()
   const isAnyItemChecked = Object.values(checkedItems).some(Boolean)
   const { data, updateData } = useRegistration()
-  const params = useSearchParams()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setTimeout(() => {
-      router.push(`/step-two?token=${params.get("token")}`)
+      router.push(`/step-two?token=${token}`)
     }, 400)
   }
 

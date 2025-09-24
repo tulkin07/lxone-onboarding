@@ -15,16 +15,15 @@ import { useCreateRegisteration } from "@/features/registration/hooks/useCreateR
 import { useHrVehicleTools } from "@/features/registration/hooks/useHrVehicleTools"
 import { Select } from "@radix-ui/react-select"
 import dayjs from "dayjs"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import React from "react"
 import DatePicker from "react-datepicker"
 
-export default function StepTwoPage() {
+export default function StepTwoPage({ token }: { token: string }) {
   const router = useRouter()
   const { data, updateData } = useRegistration()
   const { vehicleTools } = useHrVehicleTools()
   const { mutate, isPending } = useCreateRegisteration()
-  const params = useSearchParams()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const item = {
@@ -38,10 +37,10 @@ export default function StepTwoPage() {
       owner_phone: data.company_phone,
     }
     mutate(
-      { item, token: params.get("token") },
+      { item, token: token },
       {
         onSuccess: () => {
-          router.push(`/step-three?token=${params.get("token")}`)
+          router.push(`/step-three?token=${token}`)
         },
       },
     )
