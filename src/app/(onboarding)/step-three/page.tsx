@@ -1,15 +1,16 @@
 "use client"
 import { Button } from "@/components/Button"
 import { Label } from "@/components/Label"
-import { useBusinessType } from "@/features/hrportal/hr/hooks/useBusinessType"
-import { useStates } from "@/features/hrportal/hr/hooks/useState"
+import { useBusinessType } from "@/features/registration/hooks/useBusinessType"
+import { useStates } from "@/features/registration/hooks/useState"
 
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
 const RegistrationDocuments = dynamic(
-  () => import("../../../features/registration/components/RegistrationDocuments"),
+  () =>
+    import("../../../features/registration/components/RegistrationDocuments"),
   {
     ssr: false,
   },

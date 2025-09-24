@@ -12,21 +12,17 @@ import {
 } from "@/components/Select"
 import { LIMITED_LIABILITY } from "@/constants/constants"
 import { useRegistration } from "@/context/RegisterationContext"
-import { useBusinessType } from "@/features/hrportal/hr/hooks/useBusinessType"
-import { useStates } from "@/features/hrportal/hr/hooks/useState"
 import { ModalRegistration } from "@/features/registration/components/ModalRegistration"
 import ZipCodeSelect from "@/features/registration/components/ZipCodeSelect"
+import { useBusinessType } from "@/features/registration/hooks/useBusinessType"
+import { useStates } from "@/features/registration/hooks/useState"
 import { Select } from "@radix-ui/react-select"
 import { InfoIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState } from "react"
-
-interface Category {
-  id: string
-  title: string
-  subcategories: string[]
-}
+import DatePicker from "react-datepicker"
+import dayjs from "dayjs"
 
 interface CheckedItems {
   [categoryId: string]: boolean
@@ -41,18 +37,18 @@ export default function Products() {
   const { businessTypes } = useBusinessType()
   const isAnyItemChecked = Object.values(checkedItems).some(Boolean)
   const { data, updateData } = useRegistration()
+  const params = useSearchParams()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setTimeout(() => {
-      console.log("Form submitted:", checkedItems)
-      router.push("/registration/step-two")
+      router.push(`/step-two?token=${params.get("token")}`)
     }, 400)
   }
 
   return (
-    <main className="mx-auto p-3 pt-0">
+    <main className="mx-auto p-3 pt-20">
       <form onSubmit={handleSubmit}>
         <div>
           <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold dark:text-gray-400">
@@ -69,8 +65,7 @@ export default function Products() {
           <h2 className="mb-4 text-lg font-semibold dark:text-gray-400">
             Company info
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {/* Company Name */}
+          <div className="mb-5 grid grid-cols-1 gap-6 sm:grid-cols-3">
             <div>
               <Label
                 className="mb-1 block text-sm font-medium text-gray-700"
@@ -81,17 +76,14 @@ export default function Products() {
               </Label>
               <Input
                 value={data.company_name}
+                onChange={(e) => {
+                  updateData({ company_name: e.target.value })
+                }}
                 required
                 type="text"
                 placeholder="Company name"
-                onChange={(e) => {
-                  updateData({ ...data, company_name: e.target.value })
-                }}
-                // className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
-
-            {/* Phone Number */}
             <div>
               <Label
                 required
@@ -105,12 +97,44 @@ export default function Products() {
                 placeholder="+1 (123) 456-7890"
                 required
                 onChange={(value) =>
-                  updateData({ ...data, company_phone: value })
+                  updateData({
+                    company_phone: value,
+                  })
                 }
               />
             </div>
+            <div>
+              <Label
+                required
+                className="mb-1 block text-sm font-medium text-gray-700"
+              >
+                Company birth date
+              </Label>
+              <DatePicker
+                locale="en-GB"
+                wrapperClassName="w-full"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-normal shadow-sm outline-none focus:border-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-400 dark:focus:ring-blue-500/40"
+                calendarClassName="rounded-xl shadow-lg text-sm bg-white dark:bg-gray-900 dark:text-gray-100"
+                selected={
+                  data.company_birth_date
+                    ? dayjs(data.company_birth_date).toDate()
+                    : null
+                }
+                onChange={(date) => {
+                  if (date) {
+                    updateData({
+                      company_birth_date: dayjs(date).format("YYYY-MM-DD"),
+                    })
+                  }
+                }}
+                dateFormat="MMMM d, yyyy"
+                placeholderText="Select date"
+                required
+              />
+            </div>
+          </div>
 
-            {/* Doing Business As */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
               <Label
                 required
@@ -119,13 +143,11 @@ export default function Products() {
                 Doing business as:
               </Label>
               <Input
-                // value={data.other_business_type}
-                // onChange={(e) =>
-                //   updateData({ other_business_type: e.target.value })
-                // }
+                value={data.title}
+                onChange={(e) => updateData({ title: e.target.value })}
                 required
                 type="text"
-                placeholder="4564"
+                placeholder="Business name"
               />
             </div>
 
@@ -136,14 +158,17 @@ export default function Products() {
               </Label>
               <MaskedInput
                 value={data.employee_id}
-                onChange={(e) => updateData({ ...data, employee_id: e })}
+                onChange={(e) =>
+                  updateData({
+                    employee_id: e,
+                  })
+                }
                 mask="00-0000000"
                 placeholder="xx-xxxxxxx"
                 required
               />
             </div>
 
-            {/* Business Type */}
             <div className="relative">
               <Label
                 required
@@ -153,9 +178,11 @@ export default function Products() {
               </Label>
               <Select
                 required
-                value={data.business_type.toString()}
+                value={data.business_type?data.business_type.toString():undefined}
                 onValueChange={(e: string) =>
-                  updateData({ ...data, business_type: e as unknown as number })
+                  updateData({
+                    business_type: e as unknown as string,
+                  })
                 }
               >
                 <SelectTrigger className="w-full">
@@ -183,49 +210,15 @@ export default function Products() {
                   ZIP code
                 </Label>
                 <ZipCodeSelect
-                  // value="45612"
+                  value={data.zip_code}
                   onSelect={(item) => {
-                    console.log("Tanlangan joy:", item)
                     updateData({
-                      ...data,
                       state: item.state,
                       zip_code: item.zip,
                       city: item.city,
                     })
-                    // { zip: "10001", city: "New York", state: "NY" }
                   }}
                 />
-                {/* <Select required value={""}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select ZIP code " />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-60 overflow-y-auto">
-                    {isPending ? (
-                      <div className="p-2 text-center text-gray-500">
-                        Loading...
-                      </div>
-                    ) : zipCodeList?.detail?.length === 0 ? (
-                      <SelectItem value="no-data" disabled>
-                        No data
-                      </SelectItem>
-                    ) : (
-                      zipCodeList?.detail?.map(
-                        (option: {
-                          zip: string
-                          city: string
-                          state: string | null
-                        }) => (
-                          <SelectItem key={option.zip} value={option.zip}>
-                            {option.zip} – {option.city}{" "}
-                            {option.state ? `(${option.state})` : ""}
-                          </SelectItem>
-                        ),
-                      )
-                    )}
-                  </SelectContent>
-                </Select> */}
-
-                {/* <Input type="number" placeholder="ZIP code" required /> */}
               </div>
 
               {/* State */}
@@ -236,19 +229,11 @@ export default function Products() {
                 >
                   State
                 </Label>
-                {/* <Input
-                  value={data.state}
-                  onChange={(e) => updateData({ state: e.target.value })}
-                  required
-                  type="text"
-                  placeholder="4564"
-                /> */}
                 <Select
                   required
                   value={data.state}
                   onValueChange={(e: string) =>
                     updateData({
-                      ...data,
                       state: e,
                     })
                   }
@@ -280,7 +265,7 @@ export default function Products() {
             </div>
           </div>
           <div className="mt-5 grid grid-cols-2 sm:grid-cols-1">
-            {data.business_type == 6 && (
+            {data.business_type == "6" && (
               <div className="mb-4">
                 <Label
                   className="mb-1 block text-sm font-medium text-gray-700"
@@ -290,17 +275,12 @@ export default function Products() {
                 </Label>
 
                 <Select
-                // value={
-                //   formData.limited_liability
-                //     ? formData.limited_liability
-                //     : ""
-                // }
-                // onValueChange={(value) =>
-                //   setFormData((prev) => ({
-                //     ...prev,
-                //     limited_liability: value, // id as string
-                //   }))
-                // }
+                  value={data.limited_liability}
+                  onValueChange={(value) =>
+                    updateData({
+                      limited_liability: value,
+                    })
+                  }
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Liability Type" />
@@ -317,7 +297,7 @@ export default function Products() {
                 </Select>
               </div>
             )}
-            {data.business_type == 7 && (
+            {data.business_type == "7" && (
               <div className="mb-4">
                 <Label
                   className="mb-1 block text-sm font-medium text-gray-700"
@@ -325,7 +305,16 @@ export default function Products() {
                 >
                   Other
                 </Label>
-                <Input name="other_business_type" placeholder="Other" />
+                <Input
+                  name="other_business_type"
+                  placeholder="Other"
+                  value={data.other_business_type}
+                  onChange={(e) =>
+                    updateData({
+                      other_business_type: e.target.value,
+                    })
+                  }
+                />
               </div>
             )}
           </div>
@@ -340,7 +329,11 @@ export default function Products() {
               </Label>
               <Input
                 value={data.city}
-                onChange={(e) => updateData({ ...data, city: e.target.value })}
+                onChange={(e) =>
+                  updateData({
+                    city: e.target.value,
+                  })
+                }
                 required
                 type="text"
                 placeholder="City"
@@ -355,7 +348,17 @@ export default function Products() {
               >
                 Address
               </Label>
-              <Input required type="text" placeholder="Address" />
+              <Input
+                value={data.address}
+                onChange={(e) =>
+                  updateData({
+                    address: e.target.value,
+                  })
+                }
+                required
+                type="text"
+                placeholder="Address"
+              />
             </div>
 
             {/* First Name */}
@@ -367,7 +370,17 @@ export default function Products() {
                 >
                   First name
                 </Label>
-                <Input type="text" placeholder="First name" required />
+                <Input
+                  value={data.owner_first_name}
+                  onChange={(e) =>
+                    updateData({
+                      owner_first_name: e.target.value,
+                    })
+                  }
+                  type="text"
+                  placeholder="First name"
+                  required
+                />
               </div>
 
               {/* Last Name */}
@@ -378,7 +391,17 @@ export default function Products() {
                 >
                   Last name
                 </Label>
-                <Input type="text" placeholder="Last name" required />
+                <Input
+                  value={data.owner_second_name}
+                  onChange={(e) =>
+                    updateData({
+                      owner_second_name: e.target.value,
+                    })
+                  }
+                  type="text"
+                  placeholder="Last name"
+                  required
+                />
               </div>
             </div>
 
@@ -391,6 +414,12 @@ export default function Products() {
                 Email
               </Label>
               <Input
+                value={data.email}
+                onChange={(e) =>
+                  updateData({
+                    email: e.target.value,
+                  })
+                }
                 type="email"
                 required
                 placeholder="youremail@service.com"
@@ -430,14 +459,28 @@ export default function Products() {
                   <Label className="mb-1 block text-sm font-medium">
                     Exempt payee code (if any)
                   </Label>
-                  <Input type="text" placeholder="Code" />
+                  <Input
+                    value={data.exemot_payee_code}
+                    onChange={(e) =>
+                      updateData({ exemot_payee_code: e.target.value })
+                    }
+                    type="text"
+                    placeholder="Code"
+                  />
                 </div>
 
                 <div>
                   <Label className="mb-1 block text-sm font-medium">
                     Exemption from FATCA reporting code (if any)
                   </Label>
-                  <Input type="text" placeholder="Code" />
+                  <Input
+                    value={data.fatca_reporting_code}
+                    onChange={(e) =>
+                      updateData({ fatca_reporting_code: e.target.value })
+                    }
+                    type="text"
+                    placeholder="Code"
+                  />
                 </div>
               </div>
             </div>

@@ -76,6 +76,7 @@ export default function ZipAutocomplete({ value, onSelect }: ZipAutocompleteProp
       />
 
       <Input
+      required
         ref={inputRef}
         type="text"
         value={internalValue}

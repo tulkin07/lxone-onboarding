@@ -1,12 +1,12 @@
-"use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Company } from "@/features/registration/types";
+"use client"
+import React, { createContext, useContext, useState, ReactNode } from "react"
+import { Company } from "@/features/registration/types"
 
 type RegistrationContextType = {
-  data: Company;
-  updateData: (newData: Partial<Company>) => void;
-  resetData: () => void;
-};
+  data: Company
+  updateData: (newData: Partial<Company>) => void
+  resetData: () => void
+}
 
 const defaultData: Company = {
   company_name: "",
@@ -15,60 +15,63 @@ const defaultData: Company = {
   email: "",
   company_phone: "",
   owner_phone: "",
-  limited_liability: "S_CORPARATION",
-  other_business_type: "",
+  limited_liability: null,
+  other_business_type: null,
   zip_code: "",
-  state: "",
+  state: undefined,
   city: "",
   employee_id: "",
   address: "",
-  company_birth_date: new Date().toISOString().split("T")[0],
-  business_type: 1,
+  company_birth_date:null ,
+  business_type: undefined,
   emergency_phone_number: "",
+  exemot_payee_code: "",
+  fatca_reporting_code: "",
+  title:"",
   driver: {
     full_name: "",
     phone_number: "",
   },
   vehicle: {
-    length: 0,
-    width: 0,
-    height: 0,
-    door_width: 0,
-    door_height: 0,
+    length: "",
+    width: "",
+    height: "",
+    door_width: "",
+    door_height: "",
     high_dock: "no",
     equipment_ids: [],
     make: "",
     model: "",
-    payload: 0,
-    gvw: 0,
-    year: 0,
+    payload: "",
+    gvw: "",
+    year: null,
   },
-};
+}
 
-export const RegistrationContext = createContext<RegistrationContextType | undefined>(
-  undefined
-);
+export const RegistrationContext = createContext<
+  RegistrationContextType | undefined
+>(undefined)
 
 export const RegistrationProvider = ({ children }: { children: ReactNode }) => {
-  const [data, setData] = useState<Company>(defaultData);
+  const [data, setData] = useState<Company>(defaultData)
 
   const updateData = (newData: Partial<Company>) => {
-    setData((prev) => ({ ...prev, ...newData }));
-  };
+    setData((prev) => ({ ...prev, ...newData }))
+  }
 
-  const resetData = () => setData(defaultData);
+  const resetData = () => setData(defaultData)
 
   return (
     <RegistrationContext.Provider value={{ data, updateData, resetData }}>
       {children}
     </RegistrationContext.Provider>
-  );
-};
+  )
+}
 
 export const useRegistration = () => {
-  const context = useContext(RegistrationContext);
+  const context = useContext(RegistrationContext)
   if (!context) {
-    throw new Error("useRegistration must be used within RegistrationProvider");
+    throw new Error("useRegistration must be used within RegistrationProvider")
   }
-  return context;
-};
+  return context
+}
