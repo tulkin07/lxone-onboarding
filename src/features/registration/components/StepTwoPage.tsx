@@ -53,7 +53,7 @@ export default function StepTwoPage({ token }: { token: string }) {
           <h2 className="mb-4 text-lg font-semibold dark:text-gray-400">
             Vehicle info
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <Label required>Make and Model</Label>
               <Input
@@ -174,7 +174,7 @@ export default function StepTwoPage({ token }: { token: string }) {
               </Select>
             </div>
           </div>
-          <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
               <Label
                 required
@@ -230,7 +230,7 @@ export default function StepTwoPage({ token }: { token: string }) {
               />
             </div>
           </div>
-          <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <Label
                 required
@@ -269,7 +269,7 @@ export default function StepTwoPage({ token }: { token: string }) {
               />
             </div>
           </div>
-          <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="relative">
               <Label
                 required

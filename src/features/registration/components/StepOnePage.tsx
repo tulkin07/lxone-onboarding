@@ -48,7 +48,7 @@ export default function StepOnePage({token}:{token:string}) {
 
   return (
     <main className="mx-auto p-3 pt-20">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-full">
         <div>
           <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold dark:text-gray-400">
             <InfoIcon className="text-blue-500" />{" "}
@@ -64,7 +64,7 @@ export default function StepOnePage({token}:{token:string}) {
           <h2 className="mb-4 text-lg font-semibold dark:text-gray-400">
             Company info
           </h2>
-          <div className="mb-5 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
               <Label
                 className="mb-1 block text-sm font-medium text-gray-700"
@@ -133,7 +133,7 @@ export default function StepOnePage({token}:{token:string}) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 mt-5">
             <div>
               <Label
                 required
@@ -317,7 +317,7 @@ export default function StepOnePage({token}:{token:string}) {
               </div>
             )}
           </div>
-          <div className="mt-0 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-0 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {/* City */}
             <div>
               <Label
@@ -426,7 +426,7 @@ export default function StepOnePage({token}:{token:string}) {
             </div>
           </div>
         </div>
-        <div className="space-y-2 pt-5">
+        <div className="space-y-2 mt-5">
           <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-400">
             <Checkbox
               className="h-4 w-4 cursor-pointer"
