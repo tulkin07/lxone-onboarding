@@ -501,11 +501,11 @@ export default function StepOnePage({token}:{token:string}) {
             <Checkbox className="h-4 w-4 rounded border-gray-300" required />
             <span className="text-sm dark:text-gray-400">
               I have read and agree to the{" "}
-              <Link href={"/privacy"} className="text-blue-500">
+              <Link href={"https://www.logistix.one/privacy-policy"} className="text-blue-500">
                 Privacy Policy
               </Link>{" "}
               and{" "}
-              <Link href={"/terms"} className="text-blue-500">
+              <Link href={"https://www.logistix.one/terms-of-service"} className="text-blue-500">
                 Terms & Conditions.
               </Link>{" "}
               Also consent to the collection, use, and processing of my personal

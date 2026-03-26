@@ -10,7 +10,7 @@ export default function Footer() {
       </div>
       <div>© 2025 All Rights Reserved. Eva Auto Transport LLC</div>
       <div>
-        <Link href={"/privacy"} className="text-blue-500">
+        <Link href={"https://www.logistix.one/privacy-policy"} className="text-blue-500">
           Privacy Policy.
         </Link>
       </div>
