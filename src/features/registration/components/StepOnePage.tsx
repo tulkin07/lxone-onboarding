@@ -28,7 +28,7 @@ interface CheckedItems {
   [categoryId: string]: boolean
 }
 
-export default function StepOnePage({token}:{token:string}) {
+export default function StepOnePage({ token }: { token: string }) {
   const [checkedItems] = React.useState<CheckedItems>({})
   const [loading, setLoading] = React.useState(false)
   const router = useRouter()
@@ -47,9 +47,9 @@ export default function StepOnePage({token}:{token:string}) {
   }
 
   return (
-    <main className="mx-auto p-3 pt-20">
+    <main className="mx-auto p-3">
       <form onSubmit={handleSubmit} className="w-full">
-        <div>
+        <div className="">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold dark:text-gray-400">
             <InfoIcon className="text-blue-500" />{" "}
             <span className="flex">
@@ -69,7 +69,7 @@ export default function StepOnePage({token}:{token:string}) {
               <Label
                 className="mb-1 block text-sm font-medium text-gray-700"
                 required
-                // className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              // className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Company name
               </Label>
@@ -177,7 +177,7 @@ export default function StepOnePage({token}:{token:string}) {
               </Label>
               <Select
                 required
-                value={data.business_type?data.business_type.toString():undefined}
+                value={data.business_type ? data.business_type.toString() : undefined}
                 onValueChange={(e: string) =>
                   updateData({
                     business_type: e as unknown as string,
@@ -208,18 +208,19 @@ export default function StepOnePage({token}:{token:string}) {
                 >
                   ZIP code
                 </Label>
-                <ZipCodeSelect
+
+                <MaskedInput
+                  mask="00000"
                   value={data.zip_code}
-                  onSelect={(item) => {
+                  onChange={(value) =>
                     updateData({
-                      state: item.state,
-                      zip_code: item.zip,
-                      city: item.city,
+                      zip_code: value,
                     })
-                  }}
+                  }
+                  placeholder="12345"
+                  required
                 />
               </div>
-
               {/* State */}
               <div className="relative">
                 <Label
@@ -274,7 +275,7 @@ export default function StepOnePage({token}:{token:string}) {
                 </Label>
 
                 <Select
-                  value={data.limited_liability||""}
+                  value={data.limited_liability || ""}
                   onValueChange={(value) =>
                     updateData({
                       limited_liability: value,
@@ -307,7 +308,7 @@ export default function StepOnePage({token}:{token:string}) {
                 <Input
                   name="other_business_type"
                   placeholder="Other"
-                  value={data.other_business_type||""}
+                  value={data.other_business_type || ""}
                   onChange={(e) =>
                     updateData({
                       other_business_type: e.target.value,

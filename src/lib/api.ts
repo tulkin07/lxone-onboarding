@@ -1,55 +1,124 @@
-import axios from "axios"
+"use client";
 
-const api = axios.create({
-  baseURL: "https://api.logistix.one/api",
-})
+import axios, { AxiosInstance } from "axios";
 
-api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("access_token")
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`
-  }
-  return config
-})
+const DEFAULT_BASE_URL = "";
 
-api.interceptors.response.use(
-  (response) => response,
-  async (err) => {
-    const originalRequest = err.config;
+export const createApi = (baseURL?: string): AxiosInstance => {
+  const api = axios.create({
+    baseURL: baseURL || DEFAULT_BASE_URL,
+  });
 
-    if (err.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+  api.interceptors.request.use((config) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${accessToken}`,
+      };
+    }
+    return config;
+  });
 
-      try {
-        const refreshToken = localStorage.getItem("refresh_token");
-        if (!refreshToken) {
-          localStorage.clear();
-          return Promise.reject(err);
-        }
+  api.interceptors.response.use(
+    (response) => response,
+    async (err) => {
+      const originalRequest = err.config;
 
-        const { data } = await axios.post("https://api.logistix.one/api/auth/token/refresh", {
-          refresh_token: refreshToken,
-        });
+      if (err.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
 
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("refresh_token", data.refresh_token);
+        try {
+          const refreshToken = localStorage.getItem("refresh_token");
+          if (!refreshToken) {
+            localStorage.clear();
+            return Promise.reject(err);
+          }
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
-        originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
+          const { data } = await axios.post(
+            `${DEFAULT_BASE_URL}/auth/token/refresh`,
+            { refresh_token: refreshToken }
+          );
 
-        return api(originalRequest);
-      } catch (refreshError: any) {
-        if (refreshError.response?.status === 401) {
-        localStorage.clear();
-        window.location.href = "/auth/login"
-        return Promise.reject(refreshError);
+          localStorage.setItem("access_token", data.access_token);
+          localStorage.setItem("refresh_token", data.refresh_token);
+
+          api.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
+          originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
+
+          return api(originalRequest);
+        } catch (refreshError: any) {
+          if (refreshError.response?.status === 401) {
+            localStorage.clear();
+            window.location.href = "/auth/login";
+          }
+          return Promise.reject(refreshError);
         }
       }
+
+      return Promise.reject(err);
     }
+  );
 
-    return Promise.reject(err);
-  }
-);
+  return api;
+};
+
+// default instance
+const api = createApi();
+export default api;
+// import axios from "axios"
+
+// const api = axios.create({
+//   baseURL: "https://api.logistix.one/api",
+// })
+
+// api.interceptors.request.use((config) => {
+//   const accessToken = localStorage.getItem("access_token")
+//   if (accessToken) {
+//     config.headers.Authorization = `Bearer ${accessToken}`
+//   }
+//   return config
+// })
+
+// api.interceptors.response.use(
+//   (response) => response,
+//   async (err) => {
+//     const originalRequest = err.config;
+
+//     if (err.response?.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
+
+//       try {
+//         const refreshToken = localStorage.getItem("refresh_token");
+//         if (!refreshToken) {
+//           localStorage.clear();
+//           return Promise.reject(err);
+//         }
+
+//         const { data } = await axios.post("https://api.logistix.one/api/auth/token/refresh", {
+//           refresh_token: refreshToken,
+//         });
+
+//         localStorage.setItem("access_token", data.access_token);
+//         localStorage.setItem("refresh_token", data.refresh_token);
+
+//         api.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
+//         originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
+
+//         return api(originalRequest);
+//       } catch (refreshError: any) {
+//         if (refreshError.response?.status === 401) {
+//         localStorage.clear();
+//         window.location.href = "/auth/login"
+//         return Promise.reject(refreshError);
+//         }
+//       }
+//     }
+
+//     return Promise.reject(err);
+//   }
+// );
 
 
-export default api
+// export default api

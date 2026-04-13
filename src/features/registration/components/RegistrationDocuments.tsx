@@ -1,67 +1,61 @@
-"use client"
-import ImageUploader from "@/components/FilePondComponent"
-import React, { useState, useEffect, useRef } from "react"
+"use client";
+
+import ImageUploader from "@/components/FilePondComponent";
+import React, { useState, useEffect, useRef } from "react";
 
 export interface DocumentFile {
-  file_type: string
-  file: string
+  file_type: string;
+  file: string;
 }
 
 export default function RegistrationDocuments({
   data = [],
   onChangeDocuments,
-  update = false,
+  fileType,
 }: {
-  data?: DocumentFile[]
-  onChangeDocuments?: (docs: DocumentFile[]) => void
-  update?: boolean
+  data?: DocumentFile[];
+  onChangeDocuments?: (docs: DocumentFile[]) => void;
+  fileType: string;
 }) {
-  console.log(data, "doc")
-  const [documents, setDocuments] = useState<DocumentFile[]>(data)
-  const previousDocumentsRef = useRef<DocumentFile[]>(data)
-
+  const [documents, setDocuments] = useState<DocumentFile[]>(data);
+  const previousRef = useRef<DocumentFile[]>(data);
 
   useEffect(() => {
-    setDocuments(data)
-  }, [data])
+    setDocuments(data);
+  }, [data]);
 
   useEffect(() => {
     if (
       onChangeDocuments &&
-      JSON.stringify(previousDocumentsRef.current) !== JSON.stringify(documents)
+      JSON.stringify(previousRef.current) !== JSON.stringify(documents)
     ) {
-      onChangeDocuments(documents)
-      previousDocumentsRef.current = documents
+      onChangeDocuments(documents);
+      previousRef.current = documents;
     }
-  }, [documents, onChangeDocuments])
+  }, [documents, onChangeDocuments]);
 
-  const handleUpload = (newDocs: DocumentFile[], fileType: string) => {
+  const handleUpload = (newDocs: DocumentFile[]) => {
     setDocuments((prev) => {
-      const filtered = prev.filter((doc) => doc.file_type !== fileType)
-      return [...filtered, ...newDocs]
-    })
-  }
+      const filtered = prev.filter((d) => d.file_type !== fileType);
+      return [...filtered, ...newDocs];
+    });
+  };
 
-  const handleRemove = (fileName: string, fileType: string) => {
+  const handleRemove = (fileName: string) => {
     setDocuments((prev) =>
-      prev.filter(
-        (doc) => !(doc.file === fileName && doc.file_type === fileType),
-      ),
-    )
-  }
+      prev.filter((d) => d.file !== fileName)
+    );
+  };
 
   return (
     <div className="space-y-4">
-      {/* W-9 Form */}
-      <div>
-        <ImageUploader
-          multiSelect
-          fileType="1"
-          existingLogo={documents.filter((d) => d.file_type === "1")}
-          onUpload={(docs) => handleUpload(docs, "1")}
-          onRemove={(removedFile) => handleRemove(removedFile, "1")}
-        />
-      </div>
+      <ImageUploader
+        multiSelect
+        fileType={fileType}
+        existingLogo={documents.filter((d) => d.file_type === fileType)}
+        onUpload={(docs: any) => handleUpload(docs)}
+        onRemove={(file: any) => handleRemove(file)}
+      />
     </div>
-  )
+  );
 }

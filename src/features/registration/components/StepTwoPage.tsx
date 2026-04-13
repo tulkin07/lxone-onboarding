@@ -39,7 +39,8 @@ export default function StepTwoPage({ token }: { token: string }) {
     mutate(
       { item, token: token },
       {
-        onSuccess: () => {
+        onSuccess: (d) => {
+          localStorage.setItem("registration_ids",JSON.stringify(d))
           router.push(`/step-three?token=${token}`)
         },
       },

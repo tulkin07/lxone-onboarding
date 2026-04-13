@@ -5,6 +5,7 @@ import "filepond/dist/filepond.min.css"
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
 import FilePondPluginImagePreview from "filepond-plugin-image-preview"
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
+import { useSearchParams } from "next/navigation"
 
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType)
 
@@ -68,7 +69,7 @@ async function uploadFileToS3(file: File): Promise<UploadedFileInfo> {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/generate-presigned-url/?filename=${encodeURIComponent(uniqueName)}&expiration=3600`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/registeration/generate-presigned-url/?filename=${encodeURIComponent(uniqueName)}&token=${localStorage.getItem("file_token")}&expiration=3600`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -222,7 +223,9 @@ export default function ImageUploader({
     },
     [addIconsToFileItems],
   )
+const searchParams = useSearchParams();
 
+  const token = searchParams.get("token");
   return (
     <div className="relative rounded-md p-2">
       <style jsx global>{`
@@ -280,12 +283,12 @@ export default function ImageUploader({
               const data = await uploadFileToS3(file as File)
               const fileName = extractFileName(data.url)
               const presignedRes = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/generate_presigned_url_files/${encodeURIComponent(fileName)}?expiration=600`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                  },
-                },
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/registeration/generate_presigned_url_files/${encodeURIComponent(fileName)}?token=${localStorage.getItem("file_token")}&expirationexpiration=600`,
+                // {
+                //   headers: {
+                //     Authorization: `Bearer ${localStorage.getItem("file_token")}`,
+                //   },
+                // },
               )
               const { url } = await presignedRes.json()
               load(url)
