@@ -34,7 +34,7 @@ export default function NotFound() {
       </p>
 
       <Button asChild className="group mt-8" variant="light">
-        <Link href="https://apply.logistix.one">Go back to home</Link>
+        <Link href="https://logistix.one">Go back to home</Link>
       </Button>
     </div>
   );
