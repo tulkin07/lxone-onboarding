@@ -6,7 +6,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
 import FilePondPluginImagePreview from "filepond-plugin-image-preview"
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
 import { useSearchParams } from "next/navigation"
-
+import { useCompanyInfo } from "@/context/CompanyInfoContext"
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType)
 
 interface UploadedFileInfo {
@@ -28,10 +28,12 @@ interface Props {
   multiSelect?: boolean
 }
 
-async function uploadFileToS3(file: File): Promise<UploadedFileInfo> {
+async function uploadFileToS3(
+  file: File,
+  apiBaseUrl?: string,
+): Promise<UploadedFileInfo> {
   const timestamp = Date.now()
   const uniqueName = `${timestamp}_${file.name.trim().replace(/\s+/g, "_")}`
-  console.log(uniqueName, "uniq")
   function getMimeType(file: File): string {
     if (file.type) return file.type // brauzer aniqlasa to‘g‘ridan-to‘g‘ri ishlatamiz
 
@@ -68,8 +70,11 @@ async function uploadFileToS3(file: File): Promise<UploadedFileInfo> {
     }
   }
 
+  const base = apiBaseUrl || process.env.NEXT_PUBLIC_API_BASE_URL
+  if (!base) throw new Error("API base URL is not configured")
+
   const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/registeration/generate-presigned-url/?filename=${encodeURIComponent(uniqueName)}&token=${localStorage.getItem("file_token")}&expiration=3600`,
+    `${base}/registeration/generate-presigned-url/?filename=${encodeURIComponent(uniqueName)}&token=${localStorage.getItem("file_token")}&expiration=3600`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -101,11 +106,15 @@ function extractFileName(url: string): string {
 /** Same pipeline as ImageUploader `process`: S3 upload then presigned viewer URL. */
 export async function uploadRegistrationDocumentFile(
   file: File,
+  apiBaseUrl?: string,
 ): Promise<{ url: string; fileName: string }> {
-  const data = await uploadFileToS3(file)
+  const data = await uploadFileToS3(file, apiBaseUrl)
+  
   const fileName = extractFileName(data.url)
+  const base = apiBaseUrl || process.env.NEXT_PUBLIC_API_BASE_URL
+  if (!base) throw new Error("API base URL is not configured")
   const presignedRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/registeration/generate_presigned_url_files/${encodeURIComponent(fileName)}?token=${localStorage.getItem("file_token")}&expirationexpiration=600`,
+    `${base}/registeration/generate_presigned_url_files/${encodeURIComponent(fileName)}?token=${localStorage.getItem("file_token")}&expirationexpiration=600`,
   )
   if (!presignedRes.ok) {
     throw new Error(
@@ -131,6 +140,8 @@ export default function ImageUploader({
   >([])
   const filePondRef = useRef<any>(null)
   const mutationObserverRef = useRef<MutationObserver | null>(null)
+  const { companyInfo } = useCompanyInfo()
+   debugger
   const uniqueId = useRef(
     `filepond-${fileType}-${Math.random().toString(36).slice(2)}`,
   )
@@ -301,6 +312,7 @@ const searchParams = useSearchParams();
             try {
               const { url, fileName } = await uploadRegistrationDocumentFile(
                 file as File,
+                companyInfo?.subdomain,
               )
               load(url)
               setFileMetadata((prev) => [...prev, { url, name: fileName }])

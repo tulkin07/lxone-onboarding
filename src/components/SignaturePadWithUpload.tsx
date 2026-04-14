@@ -1,6 +1,7 @@
 "use client"
 
 import { uploadRegistrationDocumentFile } from "@/components/FilePondComponent"
+import { useCompanyInfo } from "@/context/CompanyInfoContext"
 import { Loader2, Trash2 } from "lucide-react"
 import React, { useEffect, useRef, useState } from "react"
 import SignatureCanvas from "react-signature-canvas"
@@ -18,6 +19,7 @@ export default function SignaturePadWithUpload({
 }: {
   onChange?: (value: string | null) => void
 }) {
+  const { companyInfo } = useCompanyInfo()
   const sigRef = useRef<SignatureCanvas | null>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [uploading, setUploading] = useState(false)
@@ -41,7 +43,10 @@ export default function SignaturePadWithUpload({
         dataUrl,
         `signature_${Date.now()}.png`,
       )
-      const { url } = await uploadRegistrationDocumentFile(file)
+      const { url } = await uploadRegistrationDocumentFile(
+        file,
+        companyInfo?.subdomain,
+      )
       onChange?.(url)
     } catch (e) {
       console.error(e)
