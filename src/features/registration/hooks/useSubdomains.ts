@@ -3,8 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createApi } from "@/lib/api";
 import { useSearchParams } from "next/navigation";
-import { useToastMessage } from "@/hooks/useToastMessage";
-import { toast } from "@/lib/useToast";
 
 
 export const useSubdomains = () => {
@@ -14,7 +12,7 @@ export const useSubdomains = () => {
 
   const api = createApi("https://hr-api.logistix.one/api");
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isError, refetch } = useQuery({
     queryKey: ["subdomains", token], 
     queryFn: async () => {
       if (!token) throw new Error("Token is required");
@@ -28,5 +26,5 @@ export const useSubdomains = () => {
   });
   
 
-  return { subdomains: data, isLoading, error };
+  return { subdomains: data, isLoading, error, isError, refetch };
 };
