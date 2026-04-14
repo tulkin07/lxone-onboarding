@@ -57,7 +57,7 @@ export const CompanyInfoProvider = ({
     }
 
     if (!isLoading && subdomains) {
-      localStorage.setItem("file_token",token)
+      localStorage.setItem("file_token", token)
       setCompanyInfo(subdomains);
     }
   }, [subdomains, isLoading, token, router]);
@@ -78,16 +78,10 @@ export const CompanyInfoProvider = ({
       <div className="flex min-h-[70vh] w-full flex-col items-center justify-center gap-3 px-4 text-center">
         <div className="max-w-md">
           <p className="text-base font-semibold text-gray-900 dark:text-gray-50">
-            Couldn’t load company info
+            Link has expired.
           </p>
           <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Please check your connection and try again.
-          </p>
-        </div>
-        <div className="mt-2 w-full max-w-xs">
-          <Button className="w-full" type="button" onClick={() => refetch()}>
-            Try again
-          </Button>
+            Please contact HR or company manager for support.          </p>
         </div>
       </div>
     );
