@@ -21,7 +21,7 @@ import { InfoIcon } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
-import DatePicker from "react-datepicker"
+import BirthDateField from "@/components/BirthDateField"
 import dayjs from "dayjs"
 
 interface CheckedItems {
@@ -47,8 +47,8 @@ export default function StepOnePage({ token }: { token: string }) {
   }
 
   return (
-    <main className="mx-auto p-3">
-      <form onSubmit={handleSubmit} className="w-full">
+    <div className="w-full">
+      <form onSubmit={handleSubmit} className="mt-4 w-full">
         <div className="">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold dark:text-gray-400">
             <InfoIcon className="text-blue-500" />{" "}
@@ -109,26 +109,11 @@ export default function StepOnePage({ token }: { token: string }) {
               >
                 Company birth date
               </Label>
-              <DatePicker
-                locale="en-GB"
-                wrapperClassName="w-full"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-normal shadow-sm outline-none focus:border-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-400 dark:focus:ring-blue-500/40"
-                calendarClassName="rounded-xl shadow-lg text-sm bg-white dark:bg-gray-900 dark:text-gray-100"
-                selected={
-                  data.company_birth_date
-                    ? dayjs(data.company_birth_date).toDate()
-                    : null
-                }
-                onChange={(date) => {
-                  if (date) {
-                    updateData({
-                      company_birth_date: dayjs(date).format("YYYY-MM-DD"),
-                    })
-                  }
-                }}
-                dateFormat="MMMM d, yyyy"
-                placeholderText="Select date"
+              <BirthDateField
                 required
+                value={data.company_birth_date}
+                onChange={(v) => updateData({ company_birth_date: v })}
+                placeholder="Select company birth date"
               />
             </div>
           </div>
@@ -524,6 +509,6 @@ export default function StepOnePage({ token }: { token: string }) {
           {loading ? "Submitting..." : "Continue"}
         </Button>
       </form>
-    </main>
+    </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/Button";
 import { Label } from "@/components/Label";
-import SignaturePad from "@/components/SignaturePad";
+import SignaturePadWithUpload from "@/components/SignaturePadWithUpload";
 import { CompanyInfoProvider } from "@/context/CompanyInfoContext";
 import React, { useState } from "react";
 import { useCreateSignatureFiles } from "../hooks/useCreateSignatureFiles";
@@ -24,7 +24,7 @@ export default function StepFinishPage() {
 
   return (
     <CompanyInfoProvider>
-      <main className="mx-auto p-3 pt-0">
+      <div className="w-full">
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
 
           <div>
@@ -32,7 +32,7 @@ export default function StepFinishPage() {
               Read the documents and sign
             </Label>
 
-            <SignaturePad onChange={setSignature} />
+            <SignaturePadWithUpload onChange={setSignature} />
           </div>
 
           <Button
@@ -40,12 +40,13 @@ export default function StepFinishPage() {
             type="submit"
             disabled={!signature || isPending}
             isLoading={isPending}
+            loadingText="Submitting..."
           >
-            {isPending ? "Submitting..." : "Continue"}
+            Continue
           </Button>
 
         </form>
-      </main>
+      </div>
     </CompanyInfoProvider>
   );
 }

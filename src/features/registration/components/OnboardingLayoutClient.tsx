@@ -1,10 +1,9 @@
 "use client"
 import { Logo } from "@/components/ui/Logo"
-import { CompanyInfoProvider, useCompanyInfo } from "@/context/CompanyInfoContext"
+import { useCompanyInfo } from "@/context/CompanyInfoContext"
 import Footer from "@/features/registration/components/Footer"
 import useScroll from "@/lib/useScroll"
 import { cx } from "@/lib/utils"
-import QueryProvider from "@/providers/ReactQuery"
 import { Mail, Phone } from "lucide-react"
 import { usePathname } from "next/navigation"
 import React from "react"
@@ -116,7 +115,10 @@ const Layout = ({
 
         </div>
       </header>
-      <main id="main-content" className="mx-auto mb-20 max-w-5xl " style={{ paddingTop: "80px" }}>
+      <main
+        id="main-content"
+        className="mx-auto flex min-h-0 w-full max-w-5xl flex-col px-4 pb-16 pt-20 md:px-6"
+      >
         {/* <QueryProvider> */}
         {children}
         <>

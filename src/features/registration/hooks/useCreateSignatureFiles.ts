@@ -10,16 +10,18 @@ export const useCreateSignatureFiles = () => {
   const router = useRouter()
   const { companyInfo } = useCompanyInfo()
   const api = createApi(companyInfo?.subdomain || "");
+  const ids = JSON.parse(localStorage.getItem("registration_ids") || "{}");
 
   const { getErrorMessage } = useToastMessage()
   const { mutate, isPending } = useMutation({
     mutationFn: async (item: any) =>
-      (await api.post(`/invite-link/registeration/signature/${searchParams.get("token")}?driver_company_id=${companyInfo.id}'`, item)).data,
+      (await api.post(`/invite-link/registeration/signature/${searchParams.get("token")}?driver_company_id=${ids?.driver_company_id}`, item)).data,
     onError: (error) => {
       getErrorMessage(error)
     },
     onSuccess: () => {
-      router.push(`/application-success`)
+      router.replace(`/application-success`)
+      // router.refresh()
     }
   })
 

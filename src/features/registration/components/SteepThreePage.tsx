@@ -106,7 +106,7 @@ export default function SteepThreePage() {
   };
 
   return (
-    <main className="mx-auto p-3">
+    <div className="w-full">
       <form onSubmit={handleSubmit} className="mt-4 space-y-6">
 
         <h2 className="text-lg font-semibold">Company</h2>
@@ -246,10 +246,10 @@ export default function SteepThreePage() {
           />
         </div>
 
-        <Button type="submit" className="w-full" isLoading={loading}>
+        <Button type="submit" className="w-full" isLoading={isPending}>
           {isPending ? "Submitting..." : "Continue"}
         </Button>
       </form>
-    </main>
+    </div>
   );
 }

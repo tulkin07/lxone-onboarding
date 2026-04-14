@@ -1,11 +1,11 @@
 import { GeistSans } from "geist/font/sans"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import React from "react"
+import "@mantine/core/styles.css"
+import "@mantine/dates/styles.css"
 import "./globals.css"
-import "react-datepicker/dist/react-datepicker.css"
 import { Toaster } from "@/components/Toaster"
-import OnboardingLayoutClient from "@/features/registration/components/OnboardingLayoutClient"
-import { RegistrationProvider } from "@/context/RegisterationContext"
+import { MantineProviders } from "@/providers/MantineProviders"
 
 export const metadata = {
   title: "Lx1",
@@ -20,7 +20,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.png",
+        url: "",
         width: 48,
         height: 48,
         alt: "Lx1 - Manage Logistics With Ease",
@@ -44,10 +44,12 @@ export default function RootLayout({
           disableTransitionOnChange
           attribute="class"
         > */}
-        <NuqsAdapter>
-          <Toaster />
-          {children}
-        </NuqsAdapter>
+        <MantineProviders>
+          <NuqsAdapter>
+            <Toaster />
+            {children}
+          </NuqsAdapter>
+        </MantineProviders>
         {/* </ThemeProvider> */}
       </body>
     </html>

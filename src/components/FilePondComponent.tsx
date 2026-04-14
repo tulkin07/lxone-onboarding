@@ -98,6 +98,25 @@ function extractFileName(url: string): string {
   return url.substring(url.lastIndexOf("/") + 1)
 }
 
+/** Same pipeline as ImageUploader `process`: S3 upload then presigned viewer URL. */
+export async function uploadRegistrationDocumentFile(
+  file: File,
+): Promise<{ url: string; fileName: string }> {
+  const data = await uploadFileToS3(file)
+  const fileName = extractFileName(data.url)
+  const presignedRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/registeration/generate_presigned_url_files/${encodeURIComponent(fileName)}?token=${localStorage.getItem("file_token")}&expirationexpiration=600`,
+  )
+  if (!presignedRes.ok) {
+    throw new Error(
+      `Failed to fetch presigned file URL: ${presignedRes.statusText}`,
+    )
+  }
+  const { url } = await presignedRes.json()
+  if (!url) throw new Error("Presigned file URL not provided")
+  return { url, fileName }
+}
+
 export default function ImageUploader({
   existingLogo,
   fileType,
@@ -280,17 +299,9 @@ const searchParams = useSearchParams();
             abort,
           ) => {
             try {
-              const data = await uploadFileToS3(file as File)
-              const fileName = extractFileName(data.url)
-              const presignedRes = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/registeration/generate_presigned_url_files/${encodeURIComponent(fileName)}?token=${localStorage.getItem("file_token")}&expirationexpiration=600`,
-                // {
-                //   headers: {
-                //     Authorization: `Bearer ${localStorage.getItem("file_token")}`,
-                //   },
-                // },
+              const { url, fileName } = await uploadRegistrationDocumentFile(
+                file as File,
               )
-              const { url } = await presignedRes.json()
               load(url)
               setFileMetadata((prev) => [...prev, { url, name: fileName }])
               const newDoc: DocumentFile = {

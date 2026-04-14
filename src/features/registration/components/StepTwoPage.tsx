@@ -14,10 +14,9 @@ import { useRegistration } from "@/context/RegisterationContext"
 import { useCreateRegisteration } from "@/features/registration/hooks/useCreateRegisteration"
 import { useHrVehicleTools } from "@/features/registration/hooks/useHrVehicleTools"
 import { Select } from "@radix-ui/react-select"
-import dayjs from "dayjs"
 import { useRouter } from "next/navigation"
 import React from "react"
-import DatePicker from "react-datepicker"
+import VehicleYearSelect from "@/components/VehicleYearSelect"
 
 export default function StepTwoPage({ token }: { token: string }) {
   const router = useRouter()
@@ -48,8 +47,8 @@ export default function StepTwoPage({ token }: { token: string }) {
   }
 
   return (
-    <main className="mx-auto p-3 pt-20">
-      <form onSubmit={handleSubmit} className="mt-4">
+    <div className="w-full">
+      <form onSubmit={handleSubmit} className="mt-4 w-full">
         <div>
           <h2 className="mb-4 text-lg font-semibold dark:text-gray-400">
             Vehicle info
@@ -278,27 +277,15 @@ export default function StepTwoPage({ token }: { token: string }) {
               >
                 Year
               </Label>
-              <DatePicker
-                locale="en-GB"
-                wrapperClassName="w-full"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-normal shadow-sm outline-none focus:border-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-400 dark:focus:ring-blue-500/40"
-                calendarClassName="rounded-xl shadow-lg text-sm bg-white dark:bg-gray-900 dark:text-gray-100"
-                selected={
-                  data.vehicle.year ? dayjs(data.vehicle.year).toDate() : null
-                }
-                onChange={(date) => {
-                  if (date) {
-                    updateData({
-                      vehicle: {
-                        ...data.vehicle,
-                        year: dayjs(date).format("YYYY"),
-                      },
-                    })
-                  }
-                }}
-                dateFormat="yyyy"
-                placeholderText="Select date"
+              <VehicleYearSelect
                 required
+                value={data.vehicle.year}
+                onChange={(year) =>
+                  updateData({
+                    vehicle: { ...data.vehicle, year },
+                  })
+                }
+                placeholder="Select model year"
               />
             </div>
           </div>
@@ -315,6 +302,6 @@ export default function StepTwoPage({ token }: { token: string }) {
           </Button>
         </div>
       </form>
-    </main>
+    </div>
   )
 }
