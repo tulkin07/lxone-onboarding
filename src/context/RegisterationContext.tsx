@@ -31,6 +31,10 @@ const defaultData: Company = {
   driver: {
     full_name: "",
     phone_number: "",
+    license_number: "",
+    license_state: "",
+    license_type: "",
+    license_expiration_date: null,
   },
   vehicle: {
     length: "",

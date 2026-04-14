@@ -92,7 +92,7 @@ const Layout = ({
           </span>
         </div>
         <StepProgress steps={steps} />
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 justify-end">
 
           {/* EMAIL */}
           <a

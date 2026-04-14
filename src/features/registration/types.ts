@@ -1,6 +1,10 @@
 export type Driver = {
   full_name: string;
   phone_number: string;
+  license_number: string;
+  license_state: string;
+  license_type: string;
+  license_expiration_date: string | null;
 };
 
 export type Vehicle = {

@@ -15,9 +15,9 @@ import React, { useState } from "react"
  */
 const FILE = {
   company: {
-    void_check: "1",
-    mc_usdot: "2",
-    extra_attachments: "3",
+    void_check: "2",
+    mc_usdot: "3",
+    extra_attachments: "4",
   },
   driver: {
     driver_license: "1",
@@ -122,11 +122,11 @@ export default function SteepThreePage() {
       driver_company_files,
     }
     console.log(payload)
-    // mutate(payload, {
-    //   onSuccess: () => {
-    //     router.push(`/step-finish?token=${searchParams.get("token")}`)
-    //   },
-    // })
+    mutate(payload, {
+      onSuccess: () => {
+        router.push(`/step-finish?token=${searchParams.get("token")}`)
+      },
+    })
   }
 
   return (

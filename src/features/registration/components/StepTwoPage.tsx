@@ -17,11 +17,15 @@ import { Select } from "@radix-ui/react-select"
 import { useRouter } from "next/navigation"
 import React from "react"
 import VehicleYearSelect from "@/components/VehicleYearSelect"
+import { useStates } from "@/features/registration/hooks/useState"
+import { DatePickerInput } from "@mantine/dates"
+import dayjs from "dayjs"
 
 export default function StepTwoPage({ token }: { token: string }) {
   const router = useRouter()
   const { data, updateData } = useRegistration()
   const { vehicleTools } = useHrVehicleTools()
+  const { states, isLoadingState } = useStates()
   const { mutate, isPending } = useCreateRegisteration()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -49,6 +53,109 @@ export default function StepTwoPage({ token }: { token: string }) {
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit} className="mt-4 w-full">
+        <div className="mb-6">
+          <h2 className="mb-4 text-lg font-semibold dark:text-gray-400">
+            Driver license
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <Label required>License number</Label>
+              <Input
+                required
+                type="text"
+                placeholder="License number"
+                value={data.driver.license_number}
+                onChange={(e) =>
+                  updateData({
+                    driver: { ...data.driver, license_number: e.target.value },
+                  })
+                }
+              />
+            </div>
+
+            <div>
+              <Label required>License type</Label>
+              <Input
+                required
+                type="text"
+                placeholder="License type"
+                value={data.driver.license_type}
+                onChange={(e) =>
+                  updateData({
+                    driver: { ...data.driver, license_type: e.target.value },
+                  })
+                }
+              />
+            </div>
+
+            <div className="relative">
+              <Label required>License state</Label>
+              <Select
+                required
+                value={data.driver.license_state}
+                onValueChange={(e: string) =>
+                  updateData({
+                    driver: { ...data.driver, license_state: e },
+                  })
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select State" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60 overflow-y-auto">
+                  {isLoadingState ? (
+                    <div className="p-2 text-center text-gray-500">
+                      Loading...
+                    </div>
+                  ) : (
+                    states?.results?.map(
+                      (option: {
+                        id: number
+                        short_name: string
+                        name: string
+                      }) => (
+                        <SelectItem
+                          key={option.id}
+                          value={option?.name}
+                        >
+                          {option.name}
+                        </SelectItem>
+                      ),
+                    )
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label required>License expiration date</Label>
+              <DatePickerInput
+                value={
+                  data.driver.license_expiration_date
+                    ? dayjs(data.driver.license_expiration_date).toDate()
+                    : null
+                }
+                onChange={(d) =>
+                  updateData({
+                    driver: {
+                      ...data.driver,
+                      license_expiration_date: d
+                        ? dayjs(d).format("YYYY-MM-DD")
+                        : null,
+                    },
+                  })
+                }
+                valueFormat="MMMM D, YYYY"
+                placeholder="Select expiration date"
+                maxDate={new Date(2100, 11, 31)}
+                minDate={new Date(1900, 0, 1)}
+                w="100%"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
         <div>
           <h2 className="mb-4 text-lg font-semibold dark:text-gray-400">
             Vehicle info
