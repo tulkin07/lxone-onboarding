@@ -8,7 +8,7 @@ export default function Footer() {
     <div className="xs:text-xs mt-12 w-full px-0 py-8 text-center text-sm font-medium text-gray-500">
       <div>
         Powered by:{" "}
-        <span className="text-base font-bold ">LogistixOne</span>
+        <span className="text-base font-bold ">LogistixOne TMS</span>
       </div>
       <div>© 2025 All Rights Reserved. {companyInfo?.company_name}</div>
       <div>
