@@ -108,7 +108,15 @@ export default function StepTwoPage({ token }: { token: string }) {
                       Loading...
                     </div>
                   ) : (
-                    states?.results?.map(
+                    [...(states?.results || [])]
+                      .sort((a: any, b: any) =>
+                        String(a?.name ?? "").localeCompare(
+                          String(b?.name ?? ""),
+                          undefined,
+                          { sensitivity: "base" },
+                        ),
+                      )
+                      .map(
                       (option: {
                         id: number
                         short_name: string
